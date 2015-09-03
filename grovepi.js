@@ -15,6 +15,9 @@
  * limitations under the License.
  **/
 
+// Modules
+var grovePiBoard = require('./lib/grovepiboard').GrovePiBoard
+
 
 // Node extensions for displaying the connection status
 function connectingStatus(n){
@@ -52,8 +55,20 @@ module.exports = function(RED) {
         this.boardConfig = RED.nodes.getNode(config.board);
  
         var n = this;
- /**       
-        if (n.boardConfig) {
+      
+        if (typeof this.boardConfig  === "object") {
+        	n.log("board has a config")
+        	
+        	// Check if Board has been initialized
+        	if (typeof this.grovePiBoard !== "object") {
+        		n.log("grovePiBoard has been configured before")
+        	} else {
+        		n.log("grovePiBoard will now be configured")
+        		this.grovePiBoard = new grovePiBoard();
+        		this.gorvePiBoard.init();
+        	}
+       
+        	/**
             // Every Pin could only used once for a device
             var i;
             var found;
@@ -70,17 +85,17 @@ module.exports = function(RED) {
         		n.error("Sensor " + n.sensor + ": Pin already in use: " + n.pin);
         		ioErrorStatus(n);
         	}
+        	**/
         	n.log ("Sensor " + n.sensor + ": is bound to Pin " + n.pin);	
         } else {
             // No config node configured
     		ioErrorStatus(n);
         	n.error ("Node has no Board configuration!");
         }
-        **/
-        
+        	
         // Establish Function for Input Event
         n.on('input', function(msg) {
-            n.log("Node with Sensor " + n.sensor + " on Pin " + n.pin + "is listening")
+            n.log("Node with Sensor " + n.sensor + " on Pin " + n.pin + " is listening")
             msg.payload = msg.payload.toLowerCase() + " Pin " + n.pin;
             connectedStatus(n);
             n.send(msg);
