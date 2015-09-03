@@ -60,12 +60,12 @@ module.exports = function(RED) {
         	n.log("board has a config")
         	
         	// Check if Board has been initialized
-        	if (typeof n.gpBoard === "object") {
-        		n.log("grovePiBoard will now be configured")
-        		n.gpBoard = new grovePiBoard();
-        		n.gpBoard.init();
-        	} else {
+        	if (typeof n.boardConfig.groveBoard === "object") {
         		n.log("grovePiBoard has been configured before")
+        	} else {
+        		n.log("grovePiBoard will now be configured")
+        		n.boardConfig.groveBoard = new grovePiBoard();
+        		n.boardConfig.groveBoard.init();
         	}
        
         	/**
@@ -110,6 +110,7 @@ module.exports = function(RED) {
         this.boardType = n.boardType;
         this.name = n.name;
         this.usedPins = [];
+        // this.groveBoard = new grovePiBoard();
     }
     RED.nodes.registerType("board-config",BoardConfigNode);
 }

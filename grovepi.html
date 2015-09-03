@@ -62,10 +62,11 @@
 	  inputs:1,
 	  outputs:1,
 	  icon: "GrovePi.png",
-	  align: "right",	  
+	  align: "right",
+	  paletteLabel: "Sensor",
 	  label: function() {
 	        console.log('name', "GrovePi-Sensor-Node " + (this.pin || ''));
-	        return this.name || "GrovePi-Sensor-Node " + (this.pin || '');
+	        return this.name || "Sensor " + (this.pin || '');
 	  }
   });
 </script>
