@@ -52,7 +52,7 @@ module.exports = function(RED) {
         this.boardConfig = RED.nodes.getNode(config.board);
  
         var n = this;
-        
+ /**       
         if (n.boardConfig) {
             // Every Pin could only used once for a device
             var i;
@@ -76,7 +76,8 @@ module.exports = function(RED) {
     		ioErrorStatus(n);
         	n.error ("Node has no Board configuration!");
         }
-          
+        **/
+        
         // Establish Function for Input Event
         n.on('input', function(msg) {
             n.log("Node with Sensor " + n.sensor + " on Pin " + n.pin + "is listening")
@@ -84,6 +85,7 @@ module.exports = function(RED) {
             connectedStatus(n);
             n.send(msg);
         });
+        
     }
     RED.nodes.registerType("grovepi-sensor-node",GrovePiSensorNode);
 
