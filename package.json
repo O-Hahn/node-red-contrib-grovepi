@@ -1,10 +1,10 @@
 {
     "name"         : "node-red-contrib-grovepi",
-    "version"      : "0.0.6",
+    "version"      : "0.0.7",
     "description"  : "GrovePi Enhancements to the Raspberry PI IoT Foundation",
     "author"	   : "Olaf Hahn",
     "license"      : "Apache-2.0",
-    "main": "grovepi.js",
+    "main"		   : "grovepi.js",
     "keywords": [ 
                  "node-red",
                  "grovepi",
