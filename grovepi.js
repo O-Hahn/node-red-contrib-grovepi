@@ -60,12 +60,12 @@ module.exports = function(RED) {
         	n.log("board has a config")
         	
         	// Check if Board has been initialized
-        	if (typeof this.grovePiBoard !== "object") {
-        		n.log("grovePiBoard has been configured before")
-        	} else {
+        	if (typeof this.grovePiBoard === "object") {
         		n.log("grovePiBoard will now be configured")
         		this.grovePiBoard = new grovePiBoard();
         		this.gorvePiBoard.init();
+        	} else {
+        		n.log("grovePiBoard has been configured before")
         	}
        
         	/**
@@ -94,11 +94,11 @@ module.exports = function(RED) {
         }
         	
         // Establish Function for Input Event
-        n.on('input', function(msg) {
-            n.log("Node with Sensor " + n.sensor + " on Pin " + n.pin + " is listening")
-            msg.payload = msg.payload.toLowerCase() + " Pin " + n.pin;
-            connectedStatus(n);
-            n.send(msg);
+        this.on('input', function(msg) {
+            this.log("Node with Sensor " + this.sensor + " on Pin " + this.pin + " is listening")
+            msg.payload = msg.payload.toLowerCase() + " Pin " + this.pin;
+            connectedStatus(this);
+            this.send(msg);
         });
         
     }
