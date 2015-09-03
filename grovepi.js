@@ -56,14 +56,14 @@ module.exports = function(RED) {
  
         var n = this;
       
-        if (typeof this.boardConfig  === "object") {
+        if (typeof n.boardConfig  === "object") {
         	n.log("board has a config")
         	
         	// Check if Board has been initialized
-        	if (typeof this.grovePiBoard === "object") {
+        	if (typeof n.gpBoard === "object") {
         		n.log("grovePiBoard will now be configured")
-        		this.grovePiBoard = new grovePiBoard();
-        		this.gorvePiBoard.init();
+        		n.gpBoard = new grovePiBoard();
+        		n.gpBoard.init();
         	} else {
         		n.log("grovePiBoard has been configured before")
         	}
@@ -86,21 +86,22 @@ module.exports = function(RED) {
         		ioErrorStatus(n);
         	}
         	**/
+        	
         	n.log ("Sensor " + n.sensor + ": is bound to Pin " + n.pin);	
+        	          	
+            // Establish Function for Input Event
+            n.on('input', function(msg) {
+                connectedStatus(n);
+                n.log("Node with Sensor " + n.sensor + " on Pin " + n.pin + " is listening")
+                msg.payload = msg.payload.toLowerCase() + " Pin " + n.pin;
+                n.send(msg);
+            });
+
         } else {
             // No config node configured
     		ioErrorStatus(n);
         	n.error ("Node has no Board configuration!");
-        }
-        	
-        // Establish Function for Input Event
-        this.on('input', function(msg) {
-            this.log("Node with Sensor " + this.sensor + " on Pin " + this.pin + " is listening")
-            msg.payload = msg.payload.toLowerCase() + " Pin " + this.pin;
-            connectedStatus(this);
-            this.send(msg);
-        });
-        
+        }        
     }
     RED.nodes.registerType("grovepi-sensor-node",GrovePiSensorNode);
 
