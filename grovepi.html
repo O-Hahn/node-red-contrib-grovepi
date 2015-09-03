@@ -1,0 +1,98 @@
+<!--
+  Copyright 2015 IBM Corp.
+  Author: Olaf Hahn
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+
+<script type="text/x-red" data-template-name="grovepi-sensor-node">
+    <div class="form-row">
+        <label for="node-input-board"><i class="fa fa-tasks"></i> Board</label>
+        <input type="text" id="node-input-board">
+    </div>
+    <div class="form-row">
+        <label for="node-input-sensor"><i class="fa fa-wrench"></i> Sensor</label>
+        <select type="text" id="node-input-sensor" style="width: 200px;">
+            <option value="TEMPHUM">Temperature and Humidity sensor</option>
+            <option value="RANGER">Ultrasonic Ranger</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-pin"><i class="fa fa-wrench"></i> Pin </label>
+        <select type="text" id="node-input-pin" style="width: 200px;">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-tips" id="node-div-formTipRow"><b>Note:</b> This is my first tryout output node with config </div>
+</script>
+
+<script type="text/x-red" data-help-name="grovepi-sensor-node">
+  <p>GrovePi - Sensor node. </p>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('grovepi-sensor-node',{
+    category: 'GrovePi',
+    defaults: {
+      sensor: {value:"TEMPHUM", required:true"},
+      pin: {value:"1"},
+      name: {value:""},
+      board: {type:"board-config", required:true}
+    },
+    color:"#f6de1d",
+    inputs:1,
+    outputs:1,
+    icon: "GrovePiWhite.png",
+    align: "right",
+    label: function() {
+      console.log('name', "GrovePi-OutNode " +(this.name || ''));
+      return this.name || "GrovePi-OutNode " +(this.name || '');
+    }
+});
+</script>
+
+
+<script type="text/x-red" data-template-name="board-config">
+    <div class="form-row">
+        <label for="node-config-input-boardType"><i class="icon-bookmark"></i> Board Type </label>
+        <input type="text" id="node-config-input-boardType">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-bookmark"></i> Name </label>
+        <input type="text" id="node-config-input-name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('board-config',{
+        category: 'config',
+        defaults: {
+            boardType: {value:"GrovePi", required:true},
+            name: {value:"", required:false},
+        },
+        label: function() {
+            return this.boardType + "-" + this.name;
+        }
+    });
+</script>
+

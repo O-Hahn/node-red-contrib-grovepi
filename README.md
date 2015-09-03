@@ -1,2 +1,3 @@
 # node-red-contrib-grovepi
-Node-Red Enhancements for GrovePi
+GrovePi - build own node-red node to support Raspberry Pi extensions to GrovePi+ Board and Sensors
+
