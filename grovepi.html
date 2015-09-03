@@ -50,24 +50,24 @@
 </script>
 
 <script type="text/javascript">
-  RED.nodes.registerType('grovepi-sensor-node',{
-    category: 'GrovePi',
-    defaults: {
-      sensor: {value:"TEMPHUM", required:true"},
-      pin: {value:"1"},
-      name: {value:""},
-      board: {type:"board-config", required:true}
-    },
-    color:"#f6de1d",
-    inputs:1,
-    outputs:1,
-    icon: "GrovePiWhite.png",
-    align: "right",
-    label: function() {
-      console.log('name', "GrovePi-Sensor-Node " +(this.name || ''));
-      return this.name || "GrovePi-Sensor-Node " +(this.name || '');
-    }
-});
+  RED.node.resisterType('grovepi-sensor-node', {
+	  category: 'GrovePi',
+	  defaults: {
+		  sensor: {value:"TEMPHUM", required:true },
+		  pin: {value:"1"},
+		  name: {value: ""},
+		  board: {type:"board-config", required:true }
+	  },
+	  color:"#f6de1d",
+	  inputs:1,
+	  outputs:1,
+	  icon: "GrovePiWhite.png",
+	  align: "right",	  
+	  label: function() {
+	        console.log('name', "GrovePi-Sensor-Node " +(this.name || ''));
+	        return this.name || "GrovePi-Sensor-Node " +(this.name || '');
+	  }
+  });
 </script>
 
 <script type="text/x-red" data-template-name="board-config">
