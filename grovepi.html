@@ -15,7 +15,6 @@
   limitations under the License.
 -->
 
-
 <script type="text/x-red" data-template-name="grovepi-sensor-node">
     <div class="form-row">
         <label for="node-input-board"><i class="fa fa-tasks"></i> Board</label>
@@ -43,7 +42,7 @@
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
-    <div class="form-tips" id="node-div-formTipRow"><b>Note:</b> This is my first tryout output node with config </div>
+    <div class="form-tips" id="node-div-formTipRow"><b>Note:</b> GrovePi Sensor Node enhancements. </div>
 </script>
 
 <script type="text/x-red" data-help-name="grovepi-sensor-node">
@@ -65,12 +64,11 @@
     icon: "GrovePiWhite.png",
     align: "right",
     label: function() {
-      console.log('name', "GrovePi-OutNode " +(this.name || ''));
-      return this.name || "GrovePi-OutNode " +(this.name || '');
+      console.log('name', "GrovePi-Sensor-Node " +(this.name || ''));
+      return this.name || "GrovePi-Sensor-Node " +(this.name || '');
     }
 });
 </script>
-
 
 <script type="text/x-red" data-template-name="board-config">
     <div class="form-row">

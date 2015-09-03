@@ -48,7 +48,7 @@ module.exports = function(RED) {
         this.sensor = config.sensor;
         this.name = config.name;
         
-        // Retrieve the config node
+        // Retrieve the board-config node
         this.boardConfig = RED.nodes.getNode(config.board);
  
         var n = this;
@@ -83,12 +83,6 @@ module.exports = function(RED) {
             msg.payload = msg.payload.toLowerCase() + " Pin " + n.pin;
             connectedStatus(n);
             n.send(msg);
-        });
-        
-        // Establisch Function for Closing Event
-        n.on('close', function() {
-            // tidy up any state
-            n.log("Node with Sensor " + n.sensor + " on Pin " + n.pin + "is closed")
         });
     }
     RED.nodes.registerType("grovepi-sensor-node",GrovePiSensorNode);
