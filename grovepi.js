@@ -42,7 +42,7 @@ function connectedStatus(n){
 module.exports = function(RED) {
     "use strict";
 	
-    function GrovePiOutNode(config) {
+    function GrovePiSensorNode(config) {
         RED.nodes.createNode(this,config);
         this.pin = config.pin;
         this.sensor = config.sensor;
@@ -51,47 +51,47 @@ module.exports = function(RED) {
         // Retrieve the config node
         this.boardConfig = RED.nodes.getNode(config.board);
  
-        var node = this;
+        var n = this;
         
-        if (node.boardConfig) {
+        if (n.boardConfig) {
             // Every Pin could only used once for a device
             var i;
             var found;
             var len; 
-        	for (i = 0, found=-1, len = node.boardConfig.usedPins.length; i < len; i++) {
-        	    if (node.boardConfig.usedPins[i] == node.pin) {
+        	for (i = 0, found=-1, len = n.boardConfig.usedPins.length; i < len; i++) {
+        	    if (n.boardConfig.usedPins[i] == n.pin) {
         	    	found = i;
         	    }
         	}
         	if (found == -1) {
-        		node.boardConfig.usedPins.push(node.pin);
-        		connectingStatus(node);
+        		n.boardConfig.usedPins.push(n.pin);
+        		connectingStatus(n);
         	} else {
-        		node.error("Sensor " + node.sensor + ": Pin already in use: " + node.pin);
-        		ioErrorStatus(node);
+        		n.error("Sensor " + n.sensor + ": Pin already in use: " + n.pin);
+        		ioErrorStatus(n);
         	}
-        	node.log ("Sensor " + node.sensor + ": is bound to Pin " + node.pin);	
+        	n.log ("Sensor " + n.sensor + ": is bound to Pin " + n.pin);	
         } else {
             // No config node configured
-    		ioErrorStatus(node);
-        	node.error ("Node has no Board configuration!");
+    		ioErrorStatus(n);
+        	n.error ("Node has no Board configuration!");
         }
           
         // Establish Function for Input Event
-        node.on('input', function(msg) {
-            node.log("Node with Sensor " + node.sensor + " on Pin " + node.pin + "is listening")
-            msg.payload = msg.payload.toLowerCase() + " Pin " + node.pin;
-            connectedStatus(node);
-            node.send(msg);
+        n.on('input', function(msg) {
+            n.log("Node with Sensor " + n.sensor + " on Pin " + n.pin + "is listening")
+            msg.payload = msg.payload.toLowerCase() + " Pin " + n.pin;
+            connectedStatus(n);
+            n.send(msg);
         });
         
         // Establisch Function for Closing Event
-        node.on('close', function() {
+        n.on('close', function() {
             // tidy up any state
-            node.log("Node with Sensor " + node.sensor + " on Pin " + node.pin + "is closed")
+            n.log("Node with Sensor " + n.sensor + " on Pin " + n.pin + "is closed")
         });
     }
-    RED.nodes.registerType("grovepi-outnode",GrovePiOutNode);
+    RED.nodes.registerType("grovepi-sensor-node",GrovePiSensorNode);
 
     function BoardConfigNode(n) {
         RED.nodes.createNode(this,n);
