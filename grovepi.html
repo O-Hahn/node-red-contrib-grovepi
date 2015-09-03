@@ -50,7 +50,7 @@
 </script>
 
 <script type="text/javascript">
-  RED.node.resisterType('grovepi-sensor-node', {
+  RED.node.registerType('grovepi-sensor-node', {
 	  category: 'test',
 	  defaults: {
 		  sensor: {value:"TEMPHUM", required:true },
@@ -61,11 +61,11 @@
 	  color:"#f6de1d",
 	  inputs:1,
 	  outputs:1,
-	  icon: "GrovePiWhite.png",
+	  icon: "GrovePi.png",
 	  align: "right",	  
 	  label: function() {
-	        console.log('name', "GrovePi-Sensor-Node " +(this.name || ''));
-	        return this.name || "GrovePi-Sensor-Node " +(this.name || '');
+	        console.log('name', "GrovePi-Sensor-Node " + (this.pin || ''));
+	        return this.name || "GrovePi-Sensor-Node " + (this.pin || '');
 	  }
   });
 </script>
