@@ -57,7 +57,7 @@ module.exports = function(RED) {
         var n = this;
       
         if (typeof n.boardConfig  === "object") {
-        	n.log("board has a config")
+        	n.log("Configuration Node exists")
         	
         	// Check if Board has been initialized
         	if (typeof n.boardConfig.groveBoard === "object") {
