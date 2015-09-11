@@ -16,7 +16,7 @@
  **/
 
 // Modules
-var grovePiBoard = require('./lib/grovepiboard').GrovePiBoard
+var GrovePiBoard = require('./lib/grovepiboard').GrovePiBoard
 
 
 // Node extensions for displaying the connection status
@@ -64,7 +64,7 @@ module.exports = function(RED) {
         		n.log("grovePiBoard has been configured before")
         	} else {
         		n.log("grovePiBoard will now be configured")
-        		n.boardConfig.groveBoard = new grovePiBoard();
+        		n.boardConfig.groveBoard = new GrovePiBoard();
         		n.boardConfig.groveBoard.init();
         	}
        
