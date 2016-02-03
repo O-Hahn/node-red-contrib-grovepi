@@ -151,6 +151,7 @@ module.exports = function(RED) {
 
          this.on('input', function(msg) {
               node.boardConfig.board.lcdRGBOutput(this.pin, msg.payload.rgb, msg.payload.text);
+              node.log("text" + msg.payload.text);
           });
 
          this.on('close', function(done) {
