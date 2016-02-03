@@ -171,6 +171,7 @@ module.exports = function(RED) {
     	this.boardType = n.boardType;
     	this.name = n.name;
     	this.usedPins = [];
+        this.log("Grovepi Config: " + this.name;
    }
    RED.nodes.registerType("board-config",GrovePiConfigNode);
 }
