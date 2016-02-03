@@ -289,8 +289,11 @@
 </script>
 
 <script type="text/x-red" data-help-name="grove lcdrgb output">
-    <p>This LCD-RGB Node receives msg.payload from the preceding node and displays the Text</p>
-    <p>on the LCD Screene</p>
+    <p>Raspberry Pi GrovePi RGB backlit LCD node. Expects either <b>msg.payload.rgb</b> or <b>msg.payload.text</b> or both. 
+    <p><b>msg.payload.rgb</b> should be an array with 3 values representing the R, G and B, for instance: <b>[255,0,0]</b> will result in a red backlight.</p>
+    <p><b>msg.payload.text</b> should be a string with a maximum of 32 characters. The first 16 characters get displayed on the first row of the LCD screen and the remaining characters get displayed on the second row.
+    <p>Will write the passed in data to the i2c port.</p>
+    <p><b>Note:</b> we are using the actual physical port numbers on the GrovePi card as they are easier to locate.</p>
 </script>
 
 <script type="text/javascript">

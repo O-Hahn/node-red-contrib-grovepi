@@ -19,7 +19,7 @@ module.exports = function(RED) {
     "use strict";
     var GrovePiBoard = require('./lib/GrovePiBoard');
 
-
+    // 
     function GrovePiAnalogSensorNode(config) {
         RED.nodes.createNode(this,config);
         // Retrieve the board-config node
@@ -150,7 +150,7 @@ module.exports = function(RED) {
          }
 
          this.on('input', function(msg) {
-              node.boardConfig.board.lcdrgbOutput(this.pin, msg.payload);
+              node.boardConfig.board.lcdRGBOutput(this.pin, msg.payload);
           });
 
          this.on('close', function(done) {
