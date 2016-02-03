@@ -268,6 +268,50 @@
 <!-- End of Grove Pi Digital Output Node -->
 
 
+<!-- Grove Pi LCD-RGB Output Node -->
+<script type="text/x-red" data-template-name="grove lcdrgb output">
+    <div class="form-row" id="grovepi-board-row">
+        <label for="node-input-board"><i class="fa fa-cogs"></i> Board</label>
+         <input type="text" id="node-input-board">
+    </div>
+    <div class="form-row" id="grovepi-pin-row">
+        <label for="node-input-pin"><i class="fa fa-tags"></i> I2C Pin</label>
+        <select id="node-input-pin">
+            <option value="1">I2C-1</option>
+            <option value="2">I2C-2</option>
+            <option value="3">I2C-3</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="grove lcdrgb output">
+    <p>This LCD-RGB Node receives msg.payload from the preceding node and displays the Text</p>
+    <p>on the LCD Screene</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('grove lcdrgb output',{
+        category: 'GrovePi',
+        color: '#C7E9C0',
+        defaults: {
+            name: {value:""},
+            board: {type:"board-config", required:true},
+            pin: {value:"1", required: true}
+        },
+        inputs:1,
+        outputs:0,
+        icon: "GrovePiWhite.png",
+        label: function() {
+            return this.name||"grove lcdrgb output";
+        }
+    });
+</script>
+<!-- End of Grove Pi LCD-RGB Output Node -->
+
 
 
 <script type="text/javascript">
