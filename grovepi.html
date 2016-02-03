@@ -15,83 +15,292 @@
   limitations under the License.
 -->
 
-<script type="text/x-red" data-template-name="grovepi-sensor-node">
-    <div class="form-row">
-        <label for="node-input-board"><i class="fa fa-tasks"></i> Board</label>
-        <input type="text" id="node-input-board">
+<!-- Grove Pi Analog Sensor Node -->
+<script type="text/x-red" data-template-name="grove analog sensor">
+    <div class="form-row" id="grovepi-board-row">
+        <label for="node-input-board"><i class="fa fa-cogs"></i> Board</label>
+         <input type="text" id="node-input-board">
     </div>
-    <div class="form-row">
-        <label for="node-input-sensor"><i class="fa fa-wrench"></i> Sensor</label>
-        <select type="text" id="node-input-sensor" style="width: 200px;">
-            <option value="TEMPHUM">Temperature and Humidity sensor</option>
-            <option value="RANGER">Ultrasonic Ranger</option>
+    <div class="form-row" id="grovepi-pin-row">
+        <label for="node-input-pin"><i class="fa fa-tags"></i> Analog Pin</label>
+        <select id="node-input-pin">
+            <option value="0">Analog 0</option>
+            <option value="1">Analog 1</option>
+            <option value="2">Analog 2</option>
         </select>
     </div>
-    <div class="form-row">
-        <label for="node-input-pin"><i class="fa fa-wrench"></i> Pin </label>
-        <select type="text" id="node-input-pin" style="width: 200px;">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-        </select>
+    <div class="form-row interval-row" id="grovepi-interval-row">
+        <label for="node-input-interval"<i class="fa fa-repeat"></i> Interval</label>
+        <input id="node-input-interval" value="1" class="interval-time-count"></input>
+        <select style="width: 150px" id="node-input-interval-units">
+            <option value="s" data-i18n="inject.seconds">Seconds</option>
+            <option value="m" data-i18n="inject.minutes">Minutes</option>
+            <option value="h" data-i18n="inject.hours">Hours</option>
+        </select><br/>
     </div>
+    <input type="hidden" id="node-input-repeat">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
-    <div class="form-tips" id="node-div-formTipRow"><b>Note:</b> GrovePi Sensor Node enhancements. </div>
 </script>
 
-<script type="text/x-red" data-help-name="grovepi-sensor-node">
-  <p>GrovePi - Sensor node. </p>
+<style>
+    .interval-row {
+    }
+    .interval-time-row select {
+        margin: 3px 0;
+    }
+    .interval-row > .ui-spinner {
+        height: 28px;
+        margin: 3px 0;
+        border-color: rgb(204, 204, 204);
+    }
+    .interval-time-count {
+        width: 40px !important;
+    }
+</style>
+
+<script type="text/x-red" data-help-name="grove analog sensor">
+    <p>Sends the reading from a Grove analog sensor to the next node</p>
+    <p>The Reading will be in plain text in <b>msg.payload</b></p>
+    <p>Make sure that you select the correct Analog pin in the node config.
+    By default the node will get the reading every 1 second, however
+    you can change this in the Interval section of the config.</p>
 </script>
 
 <script type="text/javascript">
-	RED.nodes.registerType('grovepi-sensor-node', {
-	  category: 'GrovePi',
-	  defaults: {
-		  sensor: {value:"TEMPHUM", required:true },
-		  pin: {value:"1"},
-		  name: {value: ""},
-		  board: {type:"board-config", required:true }
-	  },
-	  color:"#f6de1d",
-	  inputs:1,
-	  outputs:1,
-	  icon: "GrovePi.png",
-	  align: "right",
-	  paletteLabel: "Sensor",
-	  label: function() {
-	        console.log('name', "GrovePi-Sensor-Node " + (this.pin || ''));
-	        return this.name || "Sensor " + (this.pin || '');
-	  }
-  });
+    RED.nodes.registerType('grove analog sensor',{
+        category: 'GrovePi',
+        color: '#C7E9C0',
+        defaults: {
+            name: {value:""},
+            pin: {value:"0", required: true},
+            repeat: {value: "1", required: true},
+            board: {type:"board-config", required:true}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "GrovePiWhite.png",
+        label: function() {
+            return this.name||"grove analog sensor";
+        },
+        oneditprepare: function() {
+
+            $(".interval-time-count").spinner({
+               //max:60,
+               min:1
+           });
+           $("#node-input-interval-units").change(function() {
+               var units = $("#node-input-interval-units option:selected").val();
+           });
+           var r = "s";
+           var c = this.repeat;
+           if (this.repeat % 60 === 0) { r = "m"; c = c/60; }
+           if (this.repeat % 1440 === 0) { r = "h"; c = c/60; }
+           $("#node-input-interval").val(c);
+           $("#node-input-interval-units").val(r);
+
+       },
+       oneditsave: function() {
+           var repeat = "";
+           var count = $("#node-input-interval").val();
+           var units = $("#node-input-interval-units").val();
+           if (units == "s") {
+               repeat = count;
+           } else {
+               if(units == "m"){
+                   repeat = count * 60;
+               } else if (units ==  "h"){
+                   repeat = count * 60 * 60;
+               }
+           }
+           $("#node-input-repeat").val(repeat);
+       }
+    });
+</script>
+<!-- End of Grove Pi Analog Sensor Node -->
+
+<!-- Grove Pi Digital Sensor Node -->
+<script type="text/x-red" data-template-name="grove digital sensor">
+    <div class="form-row" id="grovepi-board-row">
+        <label for="node-input-board"><i class="fa fa-cogs"></i> Board</label>
+         <input type="text" id="node-input-board">
+    </div>
+    <div class="form-row" id="grovepi-digital-type-row">
+        <label for="node-input-sensor"><i class="fa fa-tags"></i> Sensor Type</label>
+        <select id="node-input-sensor">
+            <option value="button">Button</option>
+            <option value="sound">Sound</option>
+            <option value="ultrasonic">Ultrasonic Range</option>
+            <option value="temphum">Temperature / Humidity</option>
+        </select>
+    </div>
+    <div class="form-row" id="grovepi-pin-row">
+        <label for="node-input-pin"><i class="fa fa-tags"></i> Digital Pin</label>
+        <select id="node-input-pin">
+            <option value="2">Digital 2</option>
+            <option value="3">Digital 3</option>
+            <option value="4">Digital 4</option>
+            <option value="5">Digital 5</option>
+            <option value="6">Digital 6</option>
+            <option value="7">Digital 7</option>
+            <option value="8">Digital 8</option>
+        </select>
+    </div>
+    <div class="form-row interval-row" id="grovepi-interval-row">
+        <label for="node-input-interval"<i class="fa fa-repeat"></i> Interval</label>
+        <input id="node-input-interval" value="1" class="interval-time-count"></input>
+        <select style="width: 150px" id="node-input-interval-units">
+            <option value="s" data-i18n="inject.seconds">Seconds</option>
+            <option value="m" data-i18n="inject.minutes">Minutes</option>
+            <option value="h" data-i18n="inject.hours">Hours</option>
+        </select><br/>
+    </div>
+    <input type="hidden" id="node-input-repeat">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+<script type="text/x-red" data-help-name="grove digital sensor">
+    <p>Sends the reading from a Grove digital sensor to the next node</p>
+    <p>The Reading will be in <b>msg.payload</b> but will vary depending on the type of sensor</p>
+    <p>Make sure that you select the correct Digital pin in the node config as well as the type of digital sensor.
+    By default the node will get the reading every 1 second, however
+    you can change this in the Interval section of the config.</p>
 </script>
 
-<script type="text/x-red" data-template-name="board-config">
-    <div class="form-row">
-        <label for="node-config-input-boardType"><i class="icon-bookmark"></i> Board Type </label>
-        <input type="text" id="node-config-input-boardType">
+<script type="text/javascript">
+    RED.nodes.registerType('grove digital sensor',{
+        category: 'GrovePi',
+        color: '#C7E9C0',
+        defaults: {
+            name: {value:""},
+            board: {type:"board-config", required:true},
+            sensor: {value:"button", required: true},
+            repeat: {value: "1", required: true},
+            pin: {value:"2", required: true}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "GrovePiWhite.png",
+        label: function() {
+            return this.name||"grove digital sensor";
+        },
+        oneditprepare: function() {
+
+            $(".interval-time-count").spinner({
+               //max:60,
+               min:1
+           });
+           $("#node-input-interval-units").change(function() {
+               var units = $("#node-input-interval-units option:selected").val();
+           });
+           var r = "s";
+           var c = this.repeat;
+           if (this.repeat % 60 === 0) { r = "m"; c = c/60; }
+           if (this.repeat % 1440 === 0) { r = "h"; c = c/60; }
+           $("#node-input-interval").val(c);
+           $("#node-input-interval-units").val(r);
+
+        },oneditsave: function() {
+           var repeat = "";
+           var count = $("#node-input-interval").val();
+           var units = $("#node-input-interval-units").val();
+           if (units == "s") {
+               repeat = count;
+           } else {
+               if(units == "m"){
+                   repeat = count * 60;
+               } else if (units ==  "h"){
+                   repeat = count * 60 * 60;
+               }
+           }
+           $("#node-input-repeat").val(repeat);
+        }
+    });
+</script>
+<!-- End of Grove Pi Digital Sensor Node -->
+
+<!-- Grove Pi Output Node -->
+<script type="text/x-red" data-template-name="grove output">
+    <div class="form-row" id="grovepi-board-row">
+        <label for="node-input-board"><i class="fa fa-cogs"></i> Board</label>
+         <input type="text" id="node-input-board">
+    </div>
+    <div class="form-row" id="grovepi-output-type-row">
+        <label for="node-input-output"><i class="fa fa-tags"></i> Output Type</label>
+        <select id="node-input-output">
+            <option value="led">Led</option>
+            <option value="lcd">LCD RGB</option>
+            <option value="relay">Relay</option>
+        </select>
+    </div>
+    <div class="form-row" id="grovepi-pin-row">
+        <label for="node-input-pin"><i class="fa fa-tags"></i> Digital Pin</label>
+        <select id="node-input-pin">
+            <option value="2">Digital 2</option>
+            <option value="3">Digital 3</option>
+            <option value="4">Digital 4</option>
+            <option value="5">Digital 5</option>
+            <option value="6">Digital 6</option>
+            <option value="7">Digital 7</option>
+            <option value="8">Digital 8</option>
+        </select>
     </div>
     <div class="form-row">
-        <label for="node-config-input-name"><i class="icon-bookmark"></i> Name </label>
-        <input type="text" id="node-config-input-name">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
 
+<script type="text/x-red" data-help-name="grove output">
+    <p>Receives input from the preceding node and turns the selected pin on or off</p>
+    <p>You can send it either 1 or 0, true or false</p>
+	<p>If you choose LCD RGB - msg.payload will be sent out to the LCD</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('grove output',{
+        category: 'GrovePi',
+        color: '#C7E9C0',
+        defaults: {
+            name: {value:""},
+            output: {value:"led", required: true},
+            board: {type:"board-config", required:true},
+            pin: {value:"2", required: true}
+        },
+        inputs:1,
+        outputs:0,
+        icon: "GrovePiWhite.png",
+        label: function() {
+            return this.name||"grove output";
+        }
+    });
+</script>
+<!-- End of Grove Pi Output Node -->
+
+
+<!-- Grove Pi Config Node -->
 <script type="text/javascript">
     RED.nodes.registerType('board-config',{
         category: 'config',
         defaults: {
-            boardType: {value:"GrovePi", required:true},
-            name: {value:"", required:false},
+            board: {value:"0", required:true}
         },
         label: function() {
-            return this.boardType + "-" + this.name;
+            return this.board;
         }
     });
 </script>
 
+<script type="text/x-red" data-template-name="board-config">
+    <div class="form-row">
+        <label for="node-config-input-board"><i class="icon-bookmark"></i>GrovePi Board</label>
+        <select id="node-config-input-board">
+            <option value="GrovePi v1.2.3">Connected GrovePi v1.2.3</option>
+        </select>
+    </div>
+</script>
+<!-- End of Grove Pi Config Node -->
