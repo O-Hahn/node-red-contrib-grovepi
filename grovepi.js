@@ -94,7 +94,7 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType("grove digital sensor",GrovePiDigitalSensorNode);
 
-    function GrovePiOutputNode(config) {
+    function GrovePiDigitalOutputNode(config) {
         RED.nodes.createNode(this,config);
         // Retrieve the board-config node
        this.boardConfig = RED.nodes.getNode(config.board);
@@ -126,7 +126,7 @@ module.exports = function(RED) {
          node.error("Node has no configuration!");
        }
     }
-    RED.nodes.registerType("grove output",GrovePiOutputNode);
+    RED.nodes.registerType("grove digital output",GrovePiDigitalOutputNode);
 
     function GrovePiConfigNode(n) {
        RED.nodes.createNode(this,n);

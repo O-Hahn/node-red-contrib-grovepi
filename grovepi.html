@@ -219,8 +219,8 @@
 </script>
 <!-- End of Grove Pi Digital Sensor Node -->
 
-<!-- Grove Pi Output Node -->
-<script type="text/x-red" data-template-name="grove output">
+<!-- Grove Pi Digital Output Node -->
+<script type="text/x-red" data-template-name="grove digital output">
     <div class="form-row" id="grovepi-board-row">
         <label for="node-input-board"><i class="fa fa-cogs"></i> Board</label>
          <input type="text" id="node-input-board">
@@ -243,13 +243,13 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="grove output">
+<script type="text/x-red" data-help-name="grove digital output">
     <p>Receives input from the preceding node and turns the selected pin on or off</p>
     <p>You can send it either 1 or 0, true or false</p>
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('grove output',{
+    RED.nodes.registerType('grove digital output',{
         category: 'GrovePi',
         color: '#C7E9C0',
         defaults: {
@@ -259,13 +259,13 @@
         },
         inputs:1,
         outputs:0,
-        icon: "grove.png",
+        icon: "GrovePiWhite.png",
         label: function() {
-            return this.name||"grove output";
+            return this.name||"grove digital output";
         }
     });
 </script>
-<!-- End of Grove Pi Output Node -->
+<!-- End of Grove Pi Digital Output Node -->
 
 
 
