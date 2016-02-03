@@ -131,7 +131,7 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType("grove digital output",GrovePiDigitalOutputNode);
 
-    // LcdRGBOutputNode (Led,..)
+    // LcdRGBOutputNode (LCD,..)
     function GrovePiLcdRGBOutputNode(config) {
     	// Create this node
         RED.nodes.createNode(this,config);
