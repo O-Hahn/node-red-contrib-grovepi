@@ -1,5 +1,6 @@
 <!--
   Copyright 2015 IBM Corp.
+  Author: Olaf Hahn
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -13,6 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+
 <!-- Grove Pi Analog Sensor Node -->
 <script type="text/x-red" data-template-name="grove analog sensor">
     <div class="form-row" id="grovepi-board-row">
@@ -42,6 +44,7 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
+
 <style>
     .interval-row {
     }
@@ -57,6 +60,7 @@
         width: 40px !important;
     }
 </style>
+
 <script type="text/x-red" data-help-name="grove analog sensor">
     <p>Sends the reading from a Grove analog sensor to the next node</p>
     <p>The Reading will be in plain text in <b>msg.payload</b></p>
@@ -159,6 +163,7 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
+
 <script type="text/x-red" data-help-name="grove digital sensor">
     <p>Sends the reading from a Grove digital sensor to the next node</p>
     <p>The Reading will be in <b>msg.payload</b> but will vary depending on the type of sensor</p>
@@ -225,6 +230,14 @@
         <label for="node-input-board"><i class="fa fa-cogs"></i> Board</label>
          <input type="text" id="node-input-board">
     </div>
+    <div class="form-row" id="grovepi-output-type-row">
+        <label for="node-input-output"><i class="fa fa-tags"></i> Output Type</label>
+        <select id="node-input-output">
+            <option value="led">Led</option>
+            <option value="lcd">LCD RGB</option>
+            <option value="relay">Relay</option>
+        </select>
+    </div>
     <div class="form-row" id="grovepi-pin-row">
         <label for="node-input-pin"><i class="fa fa-tags"></i> Digital Pin</label>
         <select id="node-input-pin">
@@ -246,6 +259,7 @@
 <script type="text/x-red" data-help-name="grove output">
     <p>Receives input from the preceding node and turns the selected pin on or off</p>
     <p>You can send it either 1 or 0, true or false</p>
+	<p>If you choose LCD RGB - msg.payload will be sent out to the LCD</p>
 </script>
 
 <script type="text/javascript">
@@ -254,12 +268,13 @@
         color: '#C7E9C0',
         defaults: {
             name: {value:""},
+            output: {value:"led", required: true},
             board: {type:"board-config", required:true},
             pin: {value:"2", required: true}
         },
         inputs:1,
         outputs:0,
-        icon: "grove.png",
+        icon: "GrovePiWhite.png",
         label: function() {
             return this.name||"grove output";
         }
@@ -268,8 +283,7 @@
 <!-- End of Grove Pi Output Node -->
 
 
-
-
+<!-- Grove Pi Config Node -->
 <script type="text/javascript">
     RED.nodes.registerType('board-config',{
         category: 'config',
@@ -281,11 +295,13 @@
         }
     });
 </script>
+
 <script type="text/x-red" data-template-name="board-config">
     <div class="form-row">
         <label for="node-config-input-board"><i class="icon-bookmark"></i>GrovePi Board</label>
         <select id="node-config-input-board">
-            <option value="GrovePi">Connected GrovePi Board</option>
+            <option value="GrovePi">Connected GrovePi</option>
         </select>
     </div>
 </script>
+<!-- End of Grove Pi Config Node -->
