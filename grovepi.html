@@ -13,6 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+
 <!-- Grove Pi Analog Sensor Node -->
 <script type="text/x-red" data-template-name="grove analog sensor">
     <div class="form-row" id="grovepi-board-row">
@@ -159,6 +160,7 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
+
 <script type="text/x-red" data-help-name="grove digital sensor">
     <p>Sends the reading from a Grove digital sensor to the next node</p>
     <p>The Reading will be in <b>msg.payload</b> but will vary depending on the type of sensor</p>
@@ -316,7 +318,6 @@
 <!-- End of Grove Pi LCD-RGB Output Node -->
 
 
-
 <script type="text/javascript">
     RED.nodes.registerType('board-config',{
         category: 'config',
@@ -328,6 +329,7 @@
         }
     });
 </script>
+
 <script type="text/x-red" data-template-name="board-config">
     <div class="form-row">
         <label for="node-config-input-board"><i class="icon-bookmark"></i>GrovePi Board</label>
