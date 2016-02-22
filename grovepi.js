@@ -28,7 +28,7 @@ module.exports = function(RED) {
        this.boardConfig = RED.nodes.getNode(config.board);
        this.pin = config.pin;
        this.repeat = config.repeat;
-       this.log("Analog Sensor: Pin: " + this.pin + ", Repeat: " + this.repeat);
+       if (RED.settings.verbose) { this.log("Analog Sensor: Pin: " + this.pin + ", Repeat: " + this.repeat); }
 
        var node = this;
 
@@ -43,6 +43,11 @@ module.exports = function(RED) {
               
               node.status({fill:"green",shape:"dot",text:"connected"});
               msg.payload = response;
+              
+              if (RED.settings.verbose) { node.log("AnalogSensor value: " + response); }
+              
+              node.status({fill:"green",shape:"ring",text:"waiting"});
+
               node.send(msg);
           });
 
@@ -58,7 +63,8 @@ module.exports = function(RED) {
 
         } else {
           node.error("Node has no configuration!");
-        }
+          node.status({fill:"grey",shape:"ring",text:"error"});
+      }
     }
     RED.nodes.registerType("grove analog sensor",GrovePiAnalogSensorNode);
 
@@ -89,6 +95,9 @@ module.exports = function(RED) {
        
        	  	 node.status({fill:"green",shape:"dot",text:"connected"});
              msg.payload = response;
+             if (RED.settings.verbose) { node.log("DigitalSensor value: " + response); }
+             
+             node.status({fill:"green",shape:"ring",text:"waiting"});
              node.send(msg);
          });
 
@@ -125,7 +134,9 @@ module.exports = function(RED) {
 
          this.on('input', function(msg) {
         	 node.status({fill:"green",shape:"dot",text:"connected"});
+             if (RED.settings.verbose) { node.log("DigitalOutput on " + this.pin + " value: " + msg.payload); }
              node.boardConfig.board.digitalOutput(this.pin, msg.payload);
+        	 node.status({fill:"green",shape:"ring",text:"waiting"});
           });
 
          this.on('close', function(done) {
@@ -164,7 +175,8 @@ module.exports = function(RED) {
          this.on('input', function(msg) {
         	  node.status({fill:"green",shape:"dot",text:"connected"});
               node.boardConfig.board.lcdRGBOutput(this.pin, msg);
-              node.log("text" + msg.payload.text);
+              if (RED.settings.verbose) { node.log("LcdRGBOutput on " + this.pin + " value: " + msg.payload.text); }
+        	  node.status({fill:"green",shape:"ring",text:"waiting"});
           });
 
          this.on('close', function(done) {
