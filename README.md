@@ -54,8 +54,6 @@ Since Output nodes can either be high or low, the payload sent to the node shoul
 Any other value will be treated as 1 / true and the output will be put high.
 
 
-
-
 Node-RED nodes to control GrovePi+ Starter Kit sensors for Raspberry Pi
 ------------------------------------------------------------------------
 
@@ -63,10 +61,15 @@ Every sensor that comes with the GrovePi+ Starter Kit is supported. These sensor
 *   Buzzer
 *   Button
 *   LED (red, green & blue)
-*   Sound
 *   Relay
 *   Ultrasonic Ranger
 *   Temperature Humidity
 *   Rotary Angle
 *   RGB Backlit LCD
 *   Light
+
+Open Tasks
+----------
+*	Sound Sensor
+*	Button as Event-Sensor not time sliced (every 1 sec..)
+*	Display connected / error on the Nodes

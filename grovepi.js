@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * Authors:
- *    - James Sutton
+ *    - Olaf Hahn
  **/
+
+
 module.exports = function(RED) {
     "use strict";
     var GrovePiBoard = require('./lib/GrovePiBoard');
 
-    // 
+    // Analog Sensor Node 
     function GrovePiAnalogSensorNode(config) {
         RED.nodes.createNode(this,config);
         // Retrieve the board-config node
@@ -72,7 +74,8 @@ module.exports = function(RED) {
 
        if(node.boardConfig){
          // Board has been initialised
-         this.log("Configuration Found")
+         this.log("Configuration Found");
+         
          if(!node.boardConfig.board){
            node.boardConfig.board = new GrovePiBoard();
          }
