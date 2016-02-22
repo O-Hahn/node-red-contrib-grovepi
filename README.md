@@ -64,12 +64,13 @@ Every sensor that comes with the GrovePi+ Starter Kit is supported. These sensor
 *   Relay
 *   Ultrasonic Ranger
 *   Temperature Humidity
+*   Sound Sensor
 *   Rotary Angle
 *   RGB Backlit LCD
 *   Light
 
 Open Tasks
 ----------
-*	Sound Sensor
 *	Button as Event-Sensor not time sliced (every 1 sec..)
+*   Show the Status on the node
 *	Display connected / error on the Nodes

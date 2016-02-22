@@ -40,11 +40,15 @@ module.exports = function(RED) {
 
           this.sensor = node.boardConfig.board.registerSensor('analog', null, this.pin, this.repeat, function(response){
               var msg = {};
+              
+              node.status({fill:"green",shape:"dot",text:"connected"});
               msg.payload = response;
               node.send(msg);
           });
 
           this.on('close', function(done) {
+              node.status({fill:"grey",shape:"ring",text:"closed"});
+              
               this.sensor(function(){
                   done();
               });
@@ -80,13 +84,16 @@ module.exports = function(RED) {
            node.boardConfig.board = new GrovePiBoard();
          }
 
-         this.sensor = node.boardConfig.board.registerSensor('digital', this.sensor, this.pin, this.repeat, function(response){
-             var msg = {};
+         this.sensor = node.boardConfig.board.registerSensor('digital', this.sensor, this.pin, this.repeat, function(response) {
+        	 var msg = {};
+       
+       	  	 node.status({fill:"green",shape:"dot",text:"connected"});
              msg.payload = response;
              node.send(msg);
          });
 
          this.on('close', function(done) {
+            node.status({fill:"grey",shape:"ring",text:"closed"});
             this.sensor(function(){
                  done();
              });
@@ -117,10 +124,12 @@ module.exports = function(RED) {
          }
 
          this.on('input', function(msg) {
-              node.boardConfig.board.digitalOutput(this.pin, msg.payload);
+        	 node.status({fill:"green",shape:"dot",text:"connected"});
+             node.boardConfig.board.digitalOutput(this.pin, msg.payload);
           });
 
          this.on('close', function(done) {
+             node.status({fill:"grey",shape:"ring",text:"closed"});
              this.sensor(function(){
                  done();
              });
@@ -153,11 +162,13 @@ module.exports = function(RED) {
          }
 
          this.on('input', function(msg) {
+        	  node.status({fill:"green",shape:"dot",text:"connected"});
               node.boardConfig.board.lcdRGBOutput(this.pin, msg);
               node.log("text" + msg.payload.text);
           });
 
          this.on('close', function(done) {
+             node.status({fill:"grey",shape:"ring",text:"closed"});
              this.sensor(function(){
                  done();
              });
