@@ -178,7 +178,7 @@
         defaults: {
             name: {value:""},
             board: {type:"board-config", required:true},
-            sensor: {value:"button", required: true},
+            sensor: {value:"temphum", required: true},
             repeat: {value: "1", required: true},
             pin: {value:"2", required: true}
         },
@@ -222,6 +222,61 @@
     });
 </script>
 <!-- End of Grove Pi Digital Sensor Node -->
+
+<!-- Grove Pi Digital Eventbased Node -->
+<script type="text/x-red" data-template-name="grove digital event">
+    <div class="form-row" id="grovepi-board-row">
+        <label for="node-input-board"><i class="fa fa-cogs"></i> Board</label>
+         <input type="text" id="node-input-board">
+    </div>
+    <div class="form-row" id="grovepi-digital-type-row">
+        <label for="node-input-sensor"><i class="fa fa-tags"></i> Sensor Type</label>
+        <select id="node-input-sensor">
+            <option value="button">Button</option>
+        </select>
+    </div>
+    <div class="form-row" id="grovepi-pin-row">
+        <label for="node-input-pin"><i class="fa fa-plug"></i> Digital Pin</label>
+        <select id="node-input-pin">
+            <option value="2">Digital 2</option>
+            <option value="3">Digital 3</option>
+            <option value="4">Digital 4</option>
+            <option value="5">Digital 5</option>
+            <option value="6">Digital 6</option>
+            <option value="7">Digital 7</option>
+            <option value="8">Digital 8</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="grove digital event">
+    <p>This node will throw a value if the event occoures. For example a button is pressed. </p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('grove digital event',{
+        category: 'GrovePi',
+        color: '#C7E9C0',
+        defaults: {
+            name: {value:""},
+            board: {type:"board-config", required:true},
+            sensor: {value:"button", required: true},
+            pin: {value:"2", required: true}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "GrovePiWhite.png",
+        label: function() {
+            return this.name||"grove digital event";
+        }
+    });
+</script>
+<!-- End of Grove Pi Digital Eventbased Node -->
+
 
 <!-- Grove Pi Digital Output Node -->
 <script type="text/x-red" data-template-name="grove digital output">

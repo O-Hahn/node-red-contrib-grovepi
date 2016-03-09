@@ -38,6 +38,9 @@ module.exports = function(RED) {
             node.boardConfig.board = new GrovePiBoard();
           }
 
+          // Board has been initialised
+     	 if (RED.settings.verbose) { this.log("GrovePiAnalogSensor: Configuration Found"); }
+          
           this.sensor = node.boardConfig.board.registerSensor('analog', null, this.pin, this.repeat, function(response){
               var msg = {};
               
@@ -46,24 +49,25 @@ module.exports = function(RED) {
               
               if (RED.settings.verbose) { node.log("AnalogSensor value: " + response); }
               
-              node.status({fill:"green",shape:"ring",text:"waiting"});
-
               node.send(msg);
           });
 
-          this.on('close', function(done) {
-              node.status({fill:"grey",shape:"ring",text:"closed"});
-              
+          this.on('close', function(done) {             
               this.sensor(function(){
                   done();
               });
+              if (node.done) {
+                  node.status({fill:"grey",shape:"ring",text:"closed"});
+                  node.done();
+              }
+              else { node.status({fill:"red",shape:"ring",text:"stopped"}); }
           });
 
           node.boardConfig.board.init();
 
         } else {
           node.error("Node has no configuration!");
-          node.status({fill:"grey",shape:"ring",text:"error"});
+          node.status({fill:"red",shape:"ring",text:"error"});
       }
     }
     RED.nodes.registerType("grove analog sensor",GrovePiAnalogSensorNode);
@@ -78,18 +82,18 @@ module.exports = function(RED) {
        this.pin = config.pin;
        this.sensor = config.sensor;
        this.repeat = config.repeat;
-       this.log("Digital Sensor: Sensor: " + this.sensor + ", Pin: " + this.pin + ", Repeat: " + this.repeat);
+       if (RED.settings.verbose) { this.log("Digital Sensor: Pin: " + this.pin + ", Repeat: " + this.repeat); }
 
        var node = this;
 
        if(node.boardConfig){
-         // Board has been initialised
-         this.log("Configuration Found");
-         
          if(!node.boardConfig.board){
            node.boardConfig.board = new GrovePiBoard();
          }
 
+         // Board has been initialised
+    	 if (RED.settings.verbose) { this.log("GrovePiDigitalSensor: Configuration Found"); }
+         
          this.sensor = node.boardConfig.board.registerSensor('digital', this.sensor, this.pin, this.repeat, function(response) {
         	 var msg = {};
        
@@ -97,25 +101,81 @@ module.exports = function(RED) {
              msg.payload = response;
              if (RED.settings.verbose) { node.log("DigitalSensor value: " + response); }
              
-             node.status({fill:"green",shape:"ring",text:"waiting"});
              node.send(msg);
          });
 
          this.on('close', function(done) {
-            node.status({fill:"grey",shape:"ring",text:"closed"});
             this.sensor(function(){
                  done();
              });
+            if (node.done) {
+                node.status({fill:"grey",shape:"ring",text:"closed"});
+                node.done();
+            }
+            else { node.status({fill:"red",shape:"ring",text:"stopped"}); }
          });
 
          node.boardConfig.board.init();
 
        } else {
          node.error("Node has no configuration!");
+         node.status({fill:"red",shape:"ring",text:"error"});
        }
     }
     RED.nodes.registerType("grove digital sensor",GrovePiDigitalSensorNode);
 
+    // DigitalEventSensoreNode (Button, ..)
+    function GrovePiDigitalEventSensorNode(config) {
+    	// Create this node
+        RED.nodes.createNode(this,config);
+        
+        // Retrieve the board-config node
+       this.boardConfig = RED.nodes.getNode(config.board);
+       this.pin = config.pin;
+       this.sensor = config.sensor;
+       if (RED.settings.verbose) { this.log("Digital Eventbased Sensor: Pin: " + this.pin); }
+
+       var node = this;
+
+       if(node.boardConfig){         
+         if(!node.boardConfig.board){
+           node.boardConfig.board = new GrovePiBoard();
+         }
+
+         // Board has been initialised
+    	 if (RED.settings.verbose) { this.log("GrovePiEventSensor: Configuration Found"); }
+         
+         this.sensor = node.boardConfig.board.registerSensorEvent('digital', this.sensor, this.pin, function(response) {
+        	 var msg = {};
+       
+       	  	 node.status({fill:"green",shape:"dot",text:"connected"});
+             msg.payload = response;
+             if (RED.settings.verbose) { node.log("DigitalSensor value: " + response); }
+             
+             node.send(msg);
+         });
+
+         this.on('close', function(done) {
+            this.sensor(function(){
+                 done();
+             });
+            if (node.done) {
+                node.status({fill:"grey",shape:"ring",text:"closed"});
+                node.done();
+            }
+            else { node.status({fill:"red",shape:"ring",text:"stopped"}); }
+         });
+
+         node.boardConfig.board.init();
+
+       } else {
+         node.error("Node has no configuration!");
+         node.status({fill:"red",shape:"ring",text:"error"});
+       }
+    }
+    RED.nodes.registerType("grove digital event",GrovePiDigitalEventSensorNode);
+
+    
     // DigitalOutputNode (Led,..)
     function GrovePiDigitalOutputNode(config) {
         RED.nodes.createNode(this,config);
@@ -132,24 +192,31 @@ module.exports = function(RED) {
            node.boardConfig.board = new GrovePiBoard();
          }
 
+         // Board has been initialised
+    	 if (RED.settings.verbose) { this.log("GrovePiDigitalOutput: Configuration Found"); }
+         
          this.on('input', function(msg) {
         	 node.status({fill:"green",shape:"dot",text:"connected"});
              if (RED.settings.verbose) { node.log("DigitalOutput on " + this.pin + " value: " + msg.payload); }
              node.boardConfig.board.digitalOutput(this.pin, msg.payload);
-        	 node.status({fill:"green",shape:"ring",text:"waiting"});
           });
 
          this.on('close', function(done) {
-             node.status({fill:"grey",shape:"ring",text:"closed"});
              this.sensor(function(){
                  done();
              });
+             if (node.done) {
+                 node.status({fill:"grey",shape:"ring",text:"closed"});
+                 node.done();
+             }
+             else { node.status({fill:"red",shape:"ring",text:"stopped"}); }
          });
 
          node.boardConfig.board.init();
 
        } else {
          node.error("Node has no configuration!");
+         node.status({fill:"red",shape:"ring",text:"error"});
        }
     }
     RED.nodes.registerType("grove digital output",GrovePiDigitalOutputNode);
@@ -172,11 +239,13 @@ module.exports = function(RED) {
            node.boardConfig.board = new GrovePiBoard();
          }
 
+         // Board has been initialised
+    	 if (RED.settings.verbose) { this.log("GrovePiLcdRGBOutput: Configuration Found"); }
+         
          this.on('input', function(msg) {
         	  node.status({fill:"green",shape:"dot",text:"connected"});
               node.boardConfig.board.lcdRGBOutput(this.pin, msg);
               if (RED.settings.verbose) { node.log("LcdRGBOutput on " + this.pin + " value: " + msg.payload.text); }
-        	  node.status({fill:"green",shape:"ring",text:"waiting"});
           });
 
          this.on('close', function(done) {
@@ -184,12 +253,18 @@ module.exports = function(RED) {
              this.sensor(function(){
                  done();
              });
+             if (node.done) {
+                 node.status({fill:"grey",shape:"ring",text:"closed"});
+                 node.done();
+             }
+             else { node.status({fill:"red",shape:"ring",text:"stopped"}); }
          });
 
          node.boardConfig.board.init();
 
        } else {
          node.error("Node has no configuration!");
+         node.status({fill:"red",shape:"ring",text:"error"});
        }
     }
     RED.nodes.registerType("grove lcdrgb output",GrovePiLcdRGBOutputNode);
@@ -201,7 +276,6 @@ module.exports = function(RED) {
        
        this.boardType = n.boardType;
        this.name = n.name;
-       this.usedPins = [];
    }
    RED.nodes.registerType("board-config",GrovePiConfigNode);
 }
