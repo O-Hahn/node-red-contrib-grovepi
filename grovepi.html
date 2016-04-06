@@ -22,6 +22,13 @@
         <label for="node-input-board"><i class="fa fa-cogs"></i> Board</label>
          <input type="text" id="node-input-board">
     </div>
+    <div class="form-row" id="grovepi-sensor-type-row">
+        <label for="node-input-sensor"><i class="fa fa-tags"></i> Sensor Type</label>
+        <select id="node-input-sensor">
+            <option value="sound">Sound</option>
+            <option value="light">Light</option>
+        </select>
+    </div>
     <div class="form-row" id="grovepi-pin-row">
         <label for="node-input-pin"><i class="fa fa-plug"></i> Analog Pin</label>
         <select id="node-input-pin">
@@ -75,6 +82,7 @@
         defaults: {
             name: {value:""},
             pin: {value:"0", required: true},
+            sensor: {value:"sound", required: true},
             repeat: {value: "1", required: true},
             board: {type:"board-config", required:true}
         },
