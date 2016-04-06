@@ -27,6 +27,7 @@ module.exports = function(RED) {
         // Retrieve the board-config node
        this.boardConfig = RED.nodes.getNode(config.board);
        this.pin = config.pin;
+       this.sensor = config.sensor;
        this.repeat = config.repeat;
        if (RED.settings.verbose) { this.log("Analog Sensor: Pin: " + this.pin + ", Repeat: " + this.repeat); }
 
@@ -41,7 +42,7 @@ module.exports = function(RED) {
           // Board has been initialised
      	 if (RED.settings.verbose) { this.log("GrovePiAnalogSensor: Configuration Found"); }
           
-          this.sensor = node.boardConfig.board.registerSensor('analog', null, this.pin, this.repeat, function(response){
+          this.sensor = node.boardConfig.board.registerSensor('analog', this.sensor, this.pin, this.repeat, function(response){
               var msg = {};
               
               node.status({fill:"green",shape:"dot",text:"connected"});
