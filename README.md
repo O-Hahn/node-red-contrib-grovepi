@@ -1,5 +1,4 @@
 # node-red-contrib-grovepi
-=================================
 
 A <a href="http://nodered.org" target="_new">Node-RED</a> node to listen to and control GrovePi+ sensors and actuators from the StarterKit.
 This node will only work on an Raspberry Pi with a GrovePi daughter card and GrovePi Sensors - best if you have the GrovePi+ Starterkit. 
