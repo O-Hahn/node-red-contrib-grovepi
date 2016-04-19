@@ -8,7 +8,7 @@ Install
 
 Run the following command in the root directory of your Node-RED install or home directory (usually ~/.node-red) and will also install needed libraries.
 
-        npm install node-red-node-grovepi
+        npm install node-red-contrib-grovepi
 
 
 Usage
