@@ -7,5 +7,3 @@ node-red-pi --max-old-space-size=128 -v
 
 node-red-stop 
 node-red-start
-
-curl -u a7db756f-b2b1-43d8-aa2b-4046687978fa:pIkpt6EsJmiZ -X POST --header "Content-Type: application/json" --header "Accept: audio/wav" --data "{\"text\":\"hello world\"}" "https://stream.watsonplatform.net/text-to-speech/api/v1/synthesize" > hello.wav

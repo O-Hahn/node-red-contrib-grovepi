@@ -1,6 +1,6 @@
 {
     "name"         : "node-red-contrib-grovepi",
-    "version"      : "0.1.1",
+    "version"      : "0.1.2",
     "description"  : "Node Red Nodes for GrovePi Enhancements to the Raspberry PI and Watoson IoT Foundation",
     "license"      : "Apache-2.0",
     "main"		   : "grovepi.js",
@@ -13,7 +13,6 @@
         "test": "echo \"Error: no test specified\" && exit 1"
      },
 	 "dependencies": {
-	 	"node-red": "latest",
     	"node-grovepi": "2.0.7"
   	 },
      "repository": {
