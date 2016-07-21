@@ -14,7 +14,9 @@ Run the following command in the root directory of your Node-RED install or home
 Usage
 -----
 
-Provides a few node, some to read data from sensors and a few to send data to actuators.
+This package provides a few nodes to read data from sensors (analog and digital, some actuators and the RGB LCD Display.
+With this package you can build very easy prototypes for the Internet of Things environment with the Raspberry Pi. 
+It is used to do some education stuff with the <a href="http://www.ibm.com/cloud-computing/bluemix/internet-of-things/" target="_new">IBM Watson IoT Platform on Bluemix</a> but also could be used with others.
 
 
 ### GrovePi Configuration
@@ -23,34 +25,32 @@ To implement all nodes with only one configuration setting - there is a config n
 
 ### GrovePi Analog Sensor Node
 
-Reads data from GrovePi Analog sensors. This node simply sends a numerical value between 0 and 1024 (check this). The Value of the sensor will be in msg.payload.
+Reads data from GrovePi Analog sensors. This node simply sends a numerical value between 0 and 1024 (check this). The Value of the sensor will be in <b>msg.payload</b>.
 
 ### GrovePi Digital Sensor Node
 
 Reads data from GrovePi Digital sensors. This node requires that the user selects the type of digital sensor attached.
 Choices currently include:
- * Button (1/0)
+ * Button (true/false)
  * Sound
  * Ultrasonic Range
  * Temperature / Humidity
 
-Depending on the sensor type selected, the payload will differ. For instance, Sound and Ultrasonic will have a value, the button type will return a JSON object containing a 'state' key.
-
-``` { state: true } ```
+Depending on the sensor type selected, the payload will differ. For instance, Sound and Ultrasonic and Button will have a value, the Temperature / Humidity Sensor will return a JSON object.
 
 The Temperature / Humidity sensor will return values in separate keys
 
 ```
 {
-    temperature: 22.5,
-    humidity: 39,
-    heatIndex
+    temperature: 23.5,
+    humidity: 36,
+    heatIndex: 28.08
 }
 ```
 
 ### GrovePi Digital Event Sensor Node
 
-Reads data from GrovePi Digital sensor event based. It is for example for the button sensor. The button is press will throw an event. 
+Reads data from GrovePi Digital sensor event based. It is for example for the button sensor. The button is press will throw an event.  
 
 ### GrovePi Digital Output Node
 
@@ -65,7 +65,7 @@ Any other value will be treated as 1 / true and the output will be put high.
 
 Sends data to GrovePi LcdRGB I2C-Device. 
 
-The msg.payload should have separate keys. If rgb is not set, the information will be the once configured with the node itself.
+The <b>msg.payload</b> should have separate keys. If rgb is not set, the information will be the once configured with the node itself.
 
 ```
     text: <the lcd text>,
@@ -83,7 +83,7 @@ These sensors/actuators are:
 *   LED (red, green & blue)
 *   Relay
 *   Ultrasonic Ranger
-*   Temperature Humidity
+*   Temperature Humidity (DHT11 and DTH22)
 *   Sound Sensor
 *   Rotary Angle
 *   RGB Backlight LCD
@@ -93,5 +93,4 @@ These sensors/actuators are:
 Open Tasks
 ----------
 *	Button as Event-Sensor not time sliced (every 1 sec..) like the digital sensor node
-*   Show the correct status on the node
-*	Additional GrovePi Sensores and Actuators (e.g. OLED, ..)
+*	Additional GrovePi Sensor and Actuator (e.g. OLED, ..)

@@ -37,6 +37,7 @@ module.exports = function(RED) {
           // Board has been initialised
           if(!node.boardConfig.board){
             node.boardConfig.board = new GrovePiBoard();
+            node.boardConfig.board.init();
           }
 
           // Board has been initialised
@@ -58,13 +59,12 @@ module.exports = function(RED) {
                   done();
               });
               if (node.done) {
-                  node.status({fill:"grey",shape:"ring",text:"closed"});
+                  node.status({});
                   node.done();
               }
               else { node.status({fill:"red",shape:"ring",text:"stopped"}); }
           });
 
-          node.boardConfig.board.init();
 
         } else {
           node.error("Node has no configuration!");
@@ -90,6 +90,7 @@ module.exports = function(RED) {
        if(node.boardConfig){
          if(!node.boardConfig.board){
            node.boardConfig.board = new GrovePiBoard();
+           node.boardConfig.board.init();
          }
 
          // Board has been initialised
@@ -110,13 +111,11 @@ module.exports = function(RED) {
                  done();
              });
             if (node.done) {
-                node.status({fill:"grey",shape:"ring",text:"closed"});
+                node.status({});
                 node.done();
             }
             else { node.status({fill:"red",shape:"ring",text:"stopped"}); }
          });
-
-         node.boardConfig.board.init();
 
        } else {
          node.error("Node has no configuration!");
@@ -141,6 +140,7 @@ module.exports = function(RED) {
        if(node.boardConfig){         
          if(!node.boardConfig.board){
            node.boardConfig.board = new GrovePiBoard();
+           node.boardConfig.board.init();
          }
 
          // Board has been initialised
@@ -161,13 +161,11 @@ module.exports = function(RED) {
                  done();
              });
             if (node.done) {
-                node.status({fill:"grey",shape:"ring",text:"closed"});
+                node.status({});
                 node.done();
             }
             else { node.status({fill:"red",shape:"ring",text:"stopped"}); }
          });
-
-         node.boardConfig.board.init();
 
        } else {
          node.error("Node has no configuration!");
@@ -191,6 +189,7 @@ module.exports = function(RED) {
          // Board has been initialised
          if(!node.boardConfig.board){
            node.boardConfig.board = new GrovePiBoard();
+           node.boardConfig.board.init();
          }
 
          // Board has been initialised
@@ -207,13 +206,11 @@ module.exports = function(RED) {
                  done();
              });
              if (node.done) {
-                 node.status({fill:"grey",shape:"ring",text:"closed"});
+                 node.status({});
                  node.done();
              }
              else { node.status({fill:"red",shape:"ring",text:"stopped"}); }
          });
-
-         node.boardConfig.board.init();
 
        } else {
          node.error("Node has no configuration!");
@@ -238,6 +235,7 @@ module.exports = function(RED) {
          // Board has been initialised
          if(!node.boardConfig.board){
            node.boardConfig.board = new GrovePiBoard();
+           node.boardConfig.board.init();
          }
 
          // Board has been initialised
@@ -250,18 +248,16 @@ module.exports = function(RED) {
           });
 
          this.on('close', function(done) {
-             node.status({fill:"grey",shape:"ring",text:"closed"});
+             node.status({});
              this.sensor(function(){
                  done();
              });
              if (node.done) {
-                 node.status({fill:"grey",shape:"ring",text:"closed"});
+                 node.status({});
                  node.done();
              }
              else { node.status({fill:"red",shape:"ring",text:"stopped"}); }
          });
-
-         node.boardConfig.board.init();
 
        } else {
          node.error("Node has no configuration!");
