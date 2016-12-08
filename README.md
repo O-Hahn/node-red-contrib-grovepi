@@ -12,7 +12,7 @@ Run the following command in the root directory of your Node-RED install or home
 	npm install node-red-contrib-grovepi
 
 
-If you install it on Raspberry Pi run nom update before:
+If you install it on Raspberry Pi run npm update before:
 
 	npm -g install npm
 
