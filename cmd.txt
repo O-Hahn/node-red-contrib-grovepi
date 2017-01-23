@@ -1,9 +1,0 @@
-ssh pi@grovepi
-cd .node-red
-
-npm install https://github.com/O-Hahn/node-red-contrib-grovepi.git
-
-node-red-pi --max-old-space-size=128 -v
-
-node-red-stop 
-node-red-start

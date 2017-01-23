@@ -10,6 +10,7 @@ Run the following command in the root directory of your Node-RED install or home
 
         npm install node-red-contrib-grovepi
 
+This node was tested under Nodejs V6 LTS, NPM 3 and Node-Red 0.16
 
 Usage
 -----
