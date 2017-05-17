@@ -1,4 +1,4 @@
-# node-red-contrib-grovepi
+# node-red-contrib-grovepi 
 
 A <a href="http://nodered.org" target="_new">Node-RED</a> node to listen to and control GrovePi+ sensors and actuators from the StarterKit.
 This node will only work on an Raspberry Pi with a GrovePi daughter card and GrovePi Sensors - best if you have the GrovePi+ Starterkit. 
@@ -8,7 +8,13 @@ Install
 
 Run the following command in the root directory of your Node-RED install or home directory (usually ~/.node-red) and will also install needed libraries.
 
-        npm install node-red-contrib-grovepi
+     
+	npm install node-red-contrib-grovepi
+
+
+If you install it on Raspberry Pi run npm update before:
+
+	npm -g install npm
 
 This node was tested under Nodejs V6 LTS, NPM 3 and Node-Red 0.16
 
