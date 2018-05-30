@@ -16,14 +16,14 @@ If you install it on Raspberry Pi run npm update before:
 
 	npm -g install npm
 
-This node was tested under Nodejs V6 LTS, NPM 3 and Node-Red 0.16
+This node was tested under Nodejs V8.11 LTS, NPM 5.6 and Node-Red 0.18
 
 Usage
 -----
 
 This package provides a few nodes to read data from sensors (analog and digital, some actuators and the RGB LCD Display.
 With this package you can build very easy prototypes for the Internet of Things environment with the Raspberry Pi. 
-It is used to do some education stuff with the <a href="http://www.ibm.com/cloud-computing/bluemix/internet-of-things/" target="_new">IBM Watson IoT Platform on Bluemix</a> but also could be used with others.
+It is used to do some education stuff with the <a href="https://www.ibm.com/cloud/internet-of-things" target="_new">IBM Watson IoT Platform on IBM Cloud</a> but also could be used with others.
 
 
 ### GrovePi Configuration
