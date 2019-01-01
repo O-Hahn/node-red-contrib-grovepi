@@ -383,6 +383,44 @@
 </script>
 <!-- End of Grove Pi LCD-RGB Output Node -->
 
+<!-- Grove Pi Analog Output Node -->
+<script type="text/x-red" data-template-name="grove analog output">
+    <div class="form-row" id="grovepi-board-row">
+        <label for="node-input-board"><i class="fa fa-cogs"></i> Board</label>
+         <input type="text" id="node-input-board">
+    </div>
+    <div class="form-row" id="grovepi-pin-row">
+        <label for="node-input-pin"><i class="fa fa-plug"></i> PWM Digital Pin</label>
+        <select id="node-input-pin">
+            <option value="3">Digital 3</option>
+            <option value="5">Digital 5</option>
+            <option value="6">Digital 6</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('grove analog output',{
+        category: 'GrovePi',
+        color: '#C7E9C0',
+        defaults: {
+            name: {value:""},
+            board: {type:"board-config", required:true},
+            pin: {value:"3", required: true}
+        },
+        inputs:1,
+        outputs:0,
+        icon: "GrovePiWhite.png",
+        label: function() {
+            return this.name||"grove analog output";
+        }
+    });
+</script>
+<!-- End of Grove Pi Analog Output Node -->
+
 
 <script type="text/javascript">
     RED.nodes.registerType('board-config',{

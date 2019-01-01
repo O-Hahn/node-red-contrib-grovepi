@@ -266,6 +266,50 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType("grove lcdrgb output",GrovePiLcdRGBOutputNode);
 
+    //Analog output via grovepi PWM
+    function GrovePiAnalogOutputNode(config) {
+      RED.nodes.createNode(this, config);
+        // Retrieve the board-config node
+       this.boardConfig = RED.nodes.getNode(config.board);
+       this.pin = config.pin;
+       this.log("AnalogOutput: Pin: " + this.pin);
+
+       var node = this;
+
+       if(node.boardConfig){
+         // Board has been initialised
+         if(!node.boardConfig.board){
+           node.boardConfig.board = new GrovePiBoard();
+           node.boardConfig.board.init();
+         }
+
+         // Board has been initialised
+       if (RED.settings.verbose) { this.log("GrovePiAnalogOutput: Configuration Found"); }
+         
+         this.on('input', function(msg) {
+           node.status({fill:"green",shape:"dot",text:"connected"});
+             if (RED.settings.verbose) { node.log("AnalogOutput on " + this.pin + " value: " + msg.payload); }
+             node.boardConfig.board.analogOutput(this.pin, msg.payload);
+          });
+
+         this.on('close', function(done) {
+             this.sensor(function(){
+                 done();
+             });
+             if (node.done) {
+                 node.status({});
+                 node.done();
+             }
+             else { node.status({fill:"red",shape:"ring",text:"stopped"}); }
+         });
+
+       } else {
+         node.error("Node has no configuration!");
+         node.status({fill:"red",shape:"ring",text:"error"});
+       }
+    }
+    RED.nodes.registerType("grove analog output", GrovePiAnalogOutputNode);
+
     // GrovePi Configuration Node 
     function GrovePiConfigNode(n) {
        // Create this node
