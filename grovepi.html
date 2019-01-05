@@ -402,6 +402,13 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
+
+<script type="text/x-red" data-help-name="grove analog output">
+    <p>This node receives an integer from 0 to 255 as input and generates an analog output from the digital pin selected.</p>
+    <p>The analog signal is generated via PWM (Pulse Width Modulation) with a frequency of 976Hz.</p>
+    <p>It is very useful for controlling light brightness and devices that accept analog signals.</p>
+</script>
+
 <script type="text/javascript">
     RED.nodes.registerType('grove analog output',{
         category: 'GrovePi',
